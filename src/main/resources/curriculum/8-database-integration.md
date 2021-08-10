@@ -54,15 +54,15 @@ We will change these values to be related to our remote server when the time com
 ---
 ##New DAO Implementation - MySqlMoviesDao
 
-Now, we are ready to add a database implementation of the `MoviesDao`.
+Now, we are ready to add a database implementation of the `data.MoviesDao`.
 This  `MySqlMoviesDao` class will contain the actual code needed to query/command the database:
 
 ```JAVA
 
 import com.mysql.cj.jdbc.Driver;
+import data.MoviesDao;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlMoviesDao implements MoviesDao {
@@ -108,7 +108,7 @@ public class MySqlMoviesDao implements MoviesDao {
 
 ####Notice a few things here:
 
-- `MySqlMoviesDao implements MoviesDao`
+- `MySqlMoviesDao implements data.MoviesDao`
     - Forces our class to implement interface methods and
       let calling code be agnostic of which class is being used for data access.
 
@@ -118,7 +118,7 @@ public class MySqlMoviesDao implements MoviesDao {
 
 
 - All other methods are marked as `@Override`
-    - The methods are overridden from the `MoviesDao`
+    - The methods are overridden from the `data.MoviesDao`
     - These will be where you actually create code for databse CRUD operations
 
 ---

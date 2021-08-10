@@ -47,7 +47,7 @@ try{
 Now, we are passing to `out.println()` the return value of `DaoFactory.getMoviesDao().all()`
 
 ***Notice we are passing `DaoFactory.ImplType.IN_MEMORY` to `getMoviesDao`***.
-This is telling our Factory which implementation of the `MoviesDao` we need.
+This is telling our Factory which implementation of the `data.MoviesDao` we need.
 
 Later, we will change this to be `DaoFactory.ImplType.MYSQL`when 
 we are ready for database integration!

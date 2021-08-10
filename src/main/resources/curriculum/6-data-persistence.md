@@ -21,24 +21,28 @@ Think of a `DaoFactory` as an actual car factory.
 - You get a car and don't have to worry about how a brushless electric motor is constructed!
 
 In the `data` package, we want to create the `DaoFactory` class which has one method  `getMoviesDao()`
-As you can guess, it returns a `MoviesDao` - already configured and ready to use!
+As you can guess, it returns a `data.MoviesDao` - already configured and ready to use!
 
 ```JAVA
 
+import data.MoviesDao;
 import data.movies.InMemoryMoviesDao;
-import data.movies.MoviesDao;
+import data.movies.data.MoviesDao;
 import data.movies.MySqlMoviesDao;
 
 public class DaoFactory {
 
   private static MoviesDao moviesDao;
   private static Config config = new Config();
-  public enum ImplType {MYSQL, IN_MEMORY}; //Notice we have two values here
 
-  public static MoviesDao getMoviesDao(ImplType implementationType){
+  public enum ImplType {MYSQL, IN_MEMORY}
 
-    switch(implementationType){
-      case IN_MEMORY:{ //yet we have one switch case. We'll get to that!
+  ; //Notice we have two values here
+
+  public static MoviesDao getMoviesDao(ImplType implementationType) {
+
+    switch (implementationType) {
+      case IN_MEMORY: { //yet we have one switch case. We'll get to that!
         moviesDao = new InMemoryMoviesDao();
       }
     }
@@ -54,18 +58,18 @@ public class DaoFactory {
 To allow our code to not be tied down to one type of database,
 we will make a DAO interface which is agnostic of the final implementation of the DAO.
 
-This is particularly useful because it tells others that if they want to use our `MoviesDao`
+This is particularly useful because it tells others that if they want to use our `data.MoviesDao`
 to create a new implementation (let's say a, `InMemoryMoviesDao`, `PostgresMoviesDao` or `SqlServerMoviesDao`),
-that class *must* implement a set of methods defined in `MoviesDao`.
+that class *must* implement a set of methods defined in `data.MoviesDao`.
 
-Define the following `MoviesDao` interface in your `data` package:
+Define the following `data.MoviesDao` interface in your `data` package:
 
 ```JAVA
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface MoviesDao {
+public interface data.MoviesDao {
     List<Movie> all() throws SQLException;
     Movie findOne(int id);
     void insert(Movie movie);
@@ -76,7 +80,7 @@ public interface MoviesDao {
 
 ```
 
-The `MoviesDao` interface draws a contract with its implementations which say they must create:
+The `data.MoviesDao` interface draws a contract with its implementations which say they must create:
 
 - all()
     - Gets all the records
@@ -106,7 +110,7 @@ The `MoviesDao` interface draws a contract with its implementations which say th
 ###3. DAO Implementation - InMemoryMoviesDao
 
 Before getting fully integrated with the database, 
-let's build an implementation of the `MoviesDao`, the `InMemoryMoviesDao`.
+let's build an implementation of the `data.MoviesDao`, the `InMemoryMoviesDao`.
 We use this setup for testing our application without worrying about the database itself.
 
 ```JAVA
@@ -127,7 +131,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class InMemoryMoviesDao implements MoviesDao {
+public class InMemoryMoviesDao implements data.MoviesDao {
 
   private HashMap<Integer, Movie> moviesMap = getMoviesMap();
 
@@ -190,7 +194,7 @@ public class InMemoryMoviesDao implements MoviesDao {
 ```
 
 
-###Now, we are ready to use the `MoviesDao` in our servlets!
+###Now, we are ready to use the `data.MoviesDao` in our servlets!
 
 ---
 ##Next up: [Servlet Integration](7-servlet-integration.md)
